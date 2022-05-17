@@ -1,6 +1,7 @@
-# Car Pooling Service Challenge
-
+![Build](https://github.com/softwarejimenez/car-pooling-challenge/actions/workflows/ci.yml/badge.svg)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=softwarejimenez_car-pooling-challenge&metric=alert_status)](https://sonarcloud.io/dashboard?id=softwarejimenez_car-pooling-challenge)
+
+# Car Pooling Service Challenge
 
 Design/implement a system to manage car pooling.
 
