@@ -1,5 +1,6 @@
 package com.carpooling;
 
+import com.carpooling.controller.CarPoolingController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,7 @@ import org.springframework.http.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CarPoolingApplicationTests {
@@ -18,6 +20,9 @@ class CarPoolingApplicationTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private CarPoolingController controller;
 
     @Test
     public void contextLoads() throws Exception {

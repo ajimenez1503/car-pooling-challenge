@@ -20,11 +20,11 @@ public class CarPoolingService {
     @Autowired
     private JourneyRepository journeyRepository;
 
-    public Iterable<Car> getCars() {
+    public List<Car> getCars() {
         return carRepository.findAll();
     }
 
-    public Iterable<Journey> getJourney() {
+    public List<Journey> getJourney() {
         return journeyRepository.findAll();
     }
 
@@ -35,7 +35,7 @@ public class CarPoolingService {
         waitingJourneys.clear();
     }
 
-    public Iterable<Car> saveCars(List<Car> cars) {
+    public List<Car> saveCars(List<Car> cars) {
         return carRepository.saveAll(cars);
     }
 

@@ -25,17 +25,17 @@ public class CarPoolingController {
     }
 
     @GetMapping("/cars")
-    public Iterable<Car> getCars() {
+    public List<Car> getCars() {
         return service.getCars();
     }
 
     @GetMapping("/journeys")
-    public Iterable<Journey> getJourney() {
+    public List<Journey> getJourney() {
         return service.getJourney();
     }
 
     @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Car> loadCars(@RequestBody List<Car> cars) {
+    public List<Car> loadCars(@RequestBody List<Car> cars) {
         // Remove all previous data
         service.cleanDB();
         return service.saveCars(cars);
