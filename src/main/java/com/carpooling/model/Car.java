@@ -11,6 +11,23 @@ public class Car {
     private int seats;
     private int availableSeats;
 
+    public Car() {
+        this.id = Long.valueOf(0);
+        this.seats = 0;
+        this.availableSeats = 0;
+    }
+
+    public Car(Long id, int seat, int availableSeats) {
+        this.id = id;
+        this.seats = seats;
+        this.availableSeats = availableSeats;
+    }
+
+    public Car(Long id, int seat) {
+        setId(id);
+        setSeats(seat);
+    }
+
     public Long getId() {
         return id;
     }
@@ -37,5 +54,19 @@ public class Car {
     public void updateAvailableSeats(int availableSeats) {
 
         this.availableSeats = availableSeats;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Car) {
+            Car anotherCar = (Car) obj;
+            return anotherCar.getId() == this.id
+                    && anotherCar.getSeats() == this.seats
+                    && anotherCar.getAvailableSeats() == this.availableSeats;
+        }
+        return false;
     }
 }

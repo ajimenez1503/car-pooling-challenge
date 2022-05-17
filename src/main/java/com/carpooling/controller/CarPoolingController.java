@@ -35,10 +35,10 @@ public class CarPoolingController {
     }
 
     @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Car> loadCars(@RequestBody List<Car> cars) {
+    public ResponseEntity<List<Car>> loadCars(@RequestBody List<Car> cars) {
         // Remove all previous data
         service.cleanDB();
-        return service.saveCars(cars);
+        return new ResponseEntity<>(service.saveCars(cars), HttpStatus.OK);
     }
 
     @PostMapping(value = "/journey", consumes = MediaType.APPLICATION_JSON_VALUE)
