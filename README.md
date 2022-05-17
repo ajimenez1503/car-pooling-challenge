@@ -1,5 +1,7 @@
 # Car Pooling Service Challenge
 
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=softwarejimenez_car-pooling-challenge&metric=alert_status)](https://sonarcloud.io/dashboard?id=softwarejimenez_car-pooling-challenge)
+
 Design/implement a system to manage car pooling.
 
 Provide the service of taking people from point A to point B.
@@ -278,3 +280,5 @@ curl -X POST \
   -H 'content-type: application/x-www-form-urlencoded' \
   -d ID=1
 ```
+
+
