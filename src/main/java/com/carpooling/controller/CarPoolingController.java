@@ -25,13 +25,13 @@ public class CarPoolingController {
     }
 
     @GetMapping("/cars")
-    public List<Car> getCars() {
-        return service.getCars();
+    public ResponseEntity<List<Car>> getCars() {
+        return new ResponseEntity<>(service.getCars(), HttpStatus.OK);
     }
 
     @GetMapping("/journeys")
-    public List<Journey> getJourney() {
-        return service.getJourney();
+    public ResponseEntity<List<Journey>> getJourney() {
+        return new ResponseEntity<>(service.getJourney(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
