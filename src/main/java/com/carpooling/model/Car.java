@@ -69,4 +69,10 @@ public class Car {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "[id: " + this.id + " seats: " + this.seats + " availableSeats: " + this.availableSeats + "]";
+    }
+
 }

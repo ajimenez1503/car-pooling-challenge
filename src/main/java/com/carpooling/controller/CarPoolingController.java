@@ -45,7 +45,7 @@ public class CarPoolingController {
     public ResponseEntity<String> requestJourney(@RequestBody Journey newJourney) {
         service.addJourney(newJourney);
         service.findCarForJourney(newJourney, true /* newJourney */);
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>("", HttpStatus.ACCEPTED);
     }
 
 

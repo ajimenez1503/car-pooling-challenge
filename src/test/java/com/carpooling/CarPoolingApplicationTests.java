@@ -2,8 +2,8 @@ package com.carpooling;
 
 import com.carpooling.controller.CarPoolingController;
 import com.carpooling.model.Car;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import com.carpooling.model.Journey;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -19,9 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CarPoolingApplicationTests {
 
     static private List<Car> cars;
+    static private List<Journey> journeys;
     @LocalServerPort
     private int port;
     @Autowired
@@ -35,11 +37,15 @@ class CarPoolingApplicationTests {
      */
     @BeforeAll
     static void init() {
-        cars = new ArrayList<>(2);
-        cars.add(new Car(1L, 3));
-        cars.add(new Car(2L, 4));
-        cars.add(new Car(3L, 5));
-        cars.add(new Car(4L, 6));
+        cars = new ArrayList<>(4);
+        cars.add(new Car(0L, 3));
+        cars.add(new Car(1L, 4));
+        cars.add(new Car(2L, 5));
+        cars.add(new Car(3L, 6));
+
+        journeys = new ArrayList<>(2);
+        journeys.add(new Journey(0L, 3));
+        journeys.add(new Journey(1L, 2));
     }
 
     @Test
@@ -69,6 +75,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
+    @Order(1)
     public void putCarAPI() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -111,6 +118,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
+    @Order(2)
     public void getCarAPI() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -125,5 +133,27 @@ class CarPoolingApplicationTests {
 
         assertEquals(cars, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    /**
+     * Check that the /journey POST API return HttpStatus.ACCEPTED.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Order(3)
+    public void postJourneyAPI() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeys.get(0), headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                "http://localhost:" + port + "/journey",
+                HttpMethod.POST,
+                entity,
+                String.class);
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 }
