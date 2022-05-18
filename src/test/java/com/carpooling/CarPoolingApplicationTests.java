@@ -93,7 +93,7 @@ class CarPoolingApplicationTests {
     }
 
     /**
-     * Check that the /cars PUT API return HttpStatus.BAD_REQUEST if passing invalid body.
+     * Check that the /cars PUT API return HttpStatus.BAD_REQUEST if passing invalid request body.
      *
      * @throws Exception
      */
@@ -156,4 +156,25 @@ class CarPoolingApplicationTests {
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
+
+
+    /**
+     * Check that the /journey POST API return HttpStatus.BAD_REQUEST if passing invalid request body.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void postJourneyAPIInvalidRequestBody() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> entity = new HttpEntity<Object>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                "http://localhost:" + port + "/journey",
+                HttpMethod.POST,
+                entity,
+                String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
 }
