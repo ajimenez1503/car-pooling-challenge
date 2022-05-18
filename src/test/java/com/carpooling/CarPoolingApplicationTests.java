@@ -10,6 +10,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +66,8 @@ class CarPoolingApplicationTests {
 
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:" + port + "/status", HttpMethod.GET, entity, String.class);
 
-        assertNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNull(response.getBody());
     }
 
     /**
@@ -88,8 +89,8 @@ class CarPoolingApplicationTests {
                 new ParameterizedTypeReference<List<Car>>() {
                 });
 
-        assertEquals(cars, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(cars, response.getBody());
     }
 
     /**
@@ -131,8 +132,8 @@ class CarPoolingApplicationTests {
                 new ParameterizedTypeReference<List<Car>>() {
                 });
 
-        assertEquals(cars, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(cars, response.getBody());
     }
 
     /**
@@ -175,6 +176,30 @@ class CarPoolingApplicationTests {
                 entity,
                 String.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    /**
+     * Check that the /locate POST API return HttpStatus.Ok.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Order(4)
+    public void postLocateAPIStatusOK() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("ID", "0");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/locate",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(cars.get(0).getId(), response.getBody().getId());
     }
 
 }
