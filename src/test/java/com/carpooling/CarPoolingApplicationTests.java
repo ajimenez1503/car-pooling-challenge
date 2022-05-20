@@ -48,7 +48,7 @@ class CarPoolingApplicationTests {
     }
 
     @Test
-    public void contextLoads() throws Exception {
+    void contextLoads() throws Exception {
         assertThat(controller).isNotNull();
     }
 
@@ -58,7 +58,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void getStatusApi() throws Exception {
+    void getStatusApi() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Object> entity = new HttpEntity<Object>(headers);
 
@@ -75,7 +75,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(1)
-    public void putCarApi() throws Exception {
+    void putCarApi() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(cars, headers);
@@ -97,7 +97,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void putCarApiInvalidRequestBody() throws Exception {
+    void putCarApiInvalidRequestBody() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(headers);
@@ -118,7 +118,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(2)
-    public void getCarApi() throws Exception {
+    void getCarApi() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(headers);
@@ -142,7 +142,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(3)
-    public void postJourneyApi() throws Exception {
+    void postJourneyApi() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         ResponseEntity<String> response;
@@ -174,7 +174,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postJourneyApiInvalidRequestBody() throws Exception {
+    void postJourneyApiInvalidRequestBody() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(headers);
@@ -194,7 +194,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(4)
-    public void postLocateApiStatusOK() throws Exception {
+    void postLocateApiStatusOK() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "0");
@@ -218,7 +218,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(5)
-    public void postLocateApiStatusNoContent() throws Exception {
+    void postLocateApiStatusNoContent() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "1");
@@ -241,7 +241,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postLocateApiStatusNotFound() throws Exception {
+    void postLocateApiStatusNotFound() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "100000");
@@ -265,7 +265,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postLocateApiStatusBadRequestWrongKeyValue() throws Exception {
+    void postLocateApiStatusBadRequestWrongKeyValue() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("wrongKey", "100000");
@@ -289,7 +289,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postLocateApiStatusBadRequestDuplicateKey() throws Exception {
+    void postLocateApiStatusBadRequestDuplicateKey() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "100000");
@@ -315,7 +315,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(6)
-    public void postDropOffApiStatusOK() throws Exception {
+    void postDropOffApiStatusOK() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "0");
@@ -337,7 +337,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postDropOffApiStatusNotFound() throws Exception {
+    void postDropOffApiStatusNotFound() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "100000");
@@ -361,7 +361,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postDropOffApiStatusBadRequestWrongKeyValue() throws Exception {
+    void postDropOffApiStatusBadRequestWrongKeyValue() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("wrongKey", "100000");
@@ -385,7 +385,7 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    public void postDropOffApiStatusBadRequestDuplicateKey() throws Exception {
+    void postDropOffApiStatusBadRequestDuplicateKey() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "100000");
@@ -412,7 +412,7 @@ class CarPoolingApplicationTests {
      */
     @Test
     @Order(7)
-    public void postLocateApiStatusOKAfterWaiting() throws Exception {
+    void postLocateApiStatusOKAfterWaiting() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("ID", "1");
@@ -428,5 +428,4 @@ class CarPoolingApplicationTests {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(cars.get(1).getId(), response.getBody().getId());
     }
-
 }

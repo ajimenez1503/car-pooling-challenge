@@ -3,6 +3,7 @@ package com.carpooling.controller;
 import com.carpooling.model.Car;
 import com.carpooling.model.Journey;
 import com.carpooling.service.CarPoolingService;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,7 +53,7 @@ public class CarPoolingController {
     @PostMapping(value = "/dropoff", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> requestDropOff(@RequestBody MultiValueMap<String, String> journeyId) {
         if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
         if (journey != null) {
@@ -65,7 +66,7 @@ public class CarPoolingController {
     }
 
     @PostMapping(value = "/locate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Car> locate(@RequestBody MultiValueMap<String, String> journeyId) {
+    public ResponseEntity<@Nullable Car> locate(@RequestBody MultiValueMap<String, String> journeyId) {
         if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

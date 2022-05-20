@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class CarPoolingService {
 
-    private final List<Journey> waitingJourneys = new ArrayList<Journey>();
+    private final List<Journey> waitingJourneys = new ArrayList<>();
     @Autowired
     private CarRepository carRepository;
     @Autowired
