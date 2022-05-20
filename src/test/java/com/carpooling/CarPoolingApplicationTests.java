@@ -227,15 +227,41 @@ class CarPoolingApplicationTests {
 
     /**
      * Check that the /locate POST API return HttpStatus.BAD_REQUEST.
-     * The payload can't be unmarshalled.
+     * The payload can't be unmarshalled, wrong key value.
      *
      * @throws Exception
      */
     @Test
-    public void postLocateAPIStatusBadRequest() throws Exception {
+    public void postLocateAPIStatusBadRequestWrongKeyValue() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
         journeyId.add("wrongKey", "100000");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/locate",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    /**
+     * Check that the /locate POST API return HttpStatus.BAD_REQUEST.
+     * The key "ID" appears several times.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void postLocateAPIStatusBadRequestDuplicateKey() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("ID", "100000");
+        journeyId.add("ID", "100000");
+        journeyId.add("ID", "100000");
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
