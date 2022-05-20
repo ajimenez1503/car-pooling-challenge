@@ -52,7 +52,16 @@ public class Journey {
 
     @Override
     public String toString() {
-        return "[id: " + this.id + " people: " + people + " car: " + car == null ? " null" : car.toString() + "]";
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        result.append("id: " + this.id);
+        result.append("people: " + this.people);
+        if (this.car != null) {
+            result.append("car: " + this.car.toString());
+        }
+        result.append("]");
+
+        return result.toString();
     }
 
     @Override
@@ -60,12 +69,23 @@ public class Journey {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof Car) {
+        if (obj instanceof Journey) {
             Journey anotherJourney = (Journey) obj;
             return anotherJourney.getId() == this.id
                     && anotherJourney.getPeople() == this.people
                     && anotherJourney.getCar() == this.car;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int code = 0;
+        code += this.id;
+        code += this.people;
+        if (this.car != null) {
+            code += this.car.hashCode();
+        }
+        return code;
     }
 }

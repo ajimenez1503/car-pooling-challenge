@@ -17,12 +17,6 @@ public class Car {
         this.availableSeats = 0;
     }
 
-    public Car(Long id, int seat, int availableSeats) {
-        this.id = id;
-        this.seats = seats;
-        this.availableSeats = availableSeats;
-    }
-
     public Car(Long id, int seat) {
         setId(id);
         setSeats(seat);
@@ -72,7 +66,23 @@ public class Car {
 
     @Override
     public String toString() {
-        return "[id: " + this.id + " seats: " + this.seats + " availableSeats: " + this.availableSeats + "]";
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        result.append("id: " + this.id);
+        result.append("seats: " + this.seats);
+        result.append("availableSeats: " + this.availableSeats);
+        result.append("]");
+
+        return result.toString();
     }
 
+    @Override
+    public int hashCode() {
+        int code = 0;
+        code += this.id;
+        code += this.seats;
+        code += this.availableSeats;
+
+        return code;
+    }
 }

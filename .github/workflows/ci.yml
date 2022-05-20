@@ -1,5 +1,7 @@
 #Workflow name
-# Ref: https://aws.plainenglish.io/hands-on-ci-cd-for-spring-boot-applications-using-github-actions-and-aws-1cbc1e2c9d54
+# Ref:
+# - https://aws.plainenglish.io/hands-on-ci-cd-for-spring-boot-applications-using-github-actions-and-aws-1cbc1e2c9d54
+# - https://docs.sonarcloud.io/enriching/test-coverage/java-test-coverage/
 name: CI/CD Pipeline
 on:
   #Manually trigger workflow runs
