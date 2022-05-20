@@ -202,4 +202,28 @@ class CarPoolingApplicationTests {
         assertEquals(cars.get(0).getId(), response.getBody().getId());
     }
 
+    /**
+     * Check that the /locate POST API return HttpStatus.NOT_FOUND.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Order(4)
+    public void postLocateAPIStatusNotFound() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("ID", "100000");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/locate",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
 }
