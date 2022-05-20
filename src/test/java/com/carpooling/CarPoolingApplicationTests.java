@@ -39,14 +39,12 @@ class CarPoolingApplicationTests {
     @BeforeAll
     static void init() {
         cars = new ArrayList<>(4);
-        cars.add(new Car(0L, 3));
-        cars.add(new Car(1L, 4));
-        cars.add(new Car(2L, 5));
-        cars.add(new Car(3L, 6));
+        cars.add(new Car(0L, 2));
+        cars.add(new Car(1L, 5));
 
         journeys = new ArrayList<>(2);
-        journeys.add(new Journey(0L, 3));
-        journeys.add(new Journey(1L, 2));
+        journeys.add(new Journey(0L, 4));
+        journeys.add(new Journey(1L, 3));
     }
 
     @Test
@@ -138,6 +136,7 @@ class CarPoolingApplicationTests {
 
     /**
      * Check that the /journey POST API return HttpStatus.ACCEPTED.
+     * Post two journeys
      *
      * @throws Exception
      */
@@ -146,15 +145,25 @@ class CarPoolingApplicationTests {
     public void postJourneyAPI() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        ResponseEntity<String> response;
+        HttpEntity<Object> entity;
 
-        HttpEntity<Object> entity = new HttpEntity<Object>(journeys.get(0), headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
+        // journey 1
+        entity = new HttpEntity<Object>(journeys.get(0), headers);
+        response = restTemplate.exchange(
                 "http://localhost:" + port + "/journey",
                 HttpMethod.POST,
                 entity,
                 String.class);
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
+        // journey 2
+        entity = new HttpEntity<Object>(journeys.get(1), headers);
+        response = restTemplate.exchange(
+                "http://localhost:" + port + "/journey",
+                HttpMethod.POST,
+                entity,
+                String.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
@@ -199,7 +208,7 @@ class CarPoolingApplicationTests {
                 entity,
                 Car.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(cars.get(0).getId(), response.getBody().getId());
+        assertEquals(cars.get(1).getId(), response.getBody().getId());
     }
 
     /**
@@ -268,6 +277,102 @@ class CarPoolingApplicationTests {
 
         ResponseEntity<Car> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    /**
+     * Check that the /dropoff POST API return HttpStatus.Ok.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Order(5)
+    public void postDropOffAPIStatusOK() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("ID", "0");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                "http://localhost:" + port + "/dropoff",
+                HttpMethod.POST,
+                entity,
+                String.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    /**
+     * Check that the /dropoff POST API return HttpStatus.NOT_FOUND.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void postDropOffAPIStatusNotFound() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("ID", "100000");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/dropoff",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    /**
+     * Check that the /dropoff POST API return HttpStatus.BAD_REQUEST.
+     * The payload can't be unmarshalled, wrong key value.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void postDropOffAPIStatusBadRequestWrongKeyValue() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("wrongKey", "100000");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/dropoff",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    /**
+     * Check that the /dropoff POST API return HttpStatus.BAD_REQUEST.
+     * The key "ID" appears several times.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void postDropOffAPIStatusBadRequestDuplicateKey() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("ID", "100000");
+        journeyId.add("ID", "100000");
+        journeyId.add("ID", "100000");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/dropoff",
                 HttpMethod.POST,
                 entity,
                 Car.class);

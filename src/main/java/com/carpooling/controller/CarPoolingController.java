@@ -51,7 +51,7 @@ public class CarPoolingController {
 
     @PostMapping(value = "/dropoff", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> requestDropOff(@RequestBody MultiValueMap<String, String> journeyId) {
-        if (!journeyId.containsKey("ID") && journeyId.get("ID").size() > 1) {
+        if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
