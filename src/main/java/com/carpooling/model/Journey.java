@@ -54,10 +54,10 @@ public class Journey {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("[");
-        result.append("id: " + this.id);
-        result.append("people: " + this.people);
+        result.append("id: " + this.id + " ");
+        result.append("people: " + this.people + " ");
         if (this.car != null) {
-            result.append("car: " + this.car.toString());
+            result.append("car: " + this.car.toString() + " ");
         }
         result.append("]");
 

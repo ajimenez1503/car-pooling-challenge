@@ -208,7 +208,6 @@ class CarPoolingApplicationTests {
      * @throws Exception
      */
     @Test
-    @Order(4)
     public void postLocateAPIStatusNotFound() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
@@ -223,6 +222,30 @@ class CarPoolingApplicationTests {
                 entity,
                 Car.class);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    /**
+     * Check that the /locate POST API return HttpStatus.BAD_REQUEST.
+     * The payload can't be unmarshalled.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void postLocateAPIStatusBadRequest() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
+        journeyId.add("wrongKey", "100000");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
+
+        ResponseEntity<Car> response = restTemplate.exchange(
+                "http://localhost:" + port + "/locate",
+                HttpMethod.POST,
+                entity,
+                Car.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNull(response.getBody());
     }
 

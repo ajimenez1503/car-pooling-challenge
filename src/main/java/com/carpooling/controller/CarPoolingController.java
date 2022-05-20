@@ -66,7 +66,7 @@ public class CarPoolingController {
 
     @PostMapping(value = "/locate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Car> locate(@RequestBody MultiValueMap<String, String> journeyId) {
-        if (!journeyId.containsKey("ID") && journeyId.get("ID").size() > 1) {
+        if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
