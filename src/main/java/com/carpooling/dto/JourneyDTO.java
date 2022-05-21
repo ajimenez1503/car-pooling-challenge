@@ -1,5 +1,7 @@
 package com.carpooling.dto;
 
+import com.carpooling.model.Journey;
+
 public class JourneyDTO {
     private Long id;
     private int people;
@@ -10,7 +12,7 @@ public class JourneyDTO {
         this.people = 0;
     }
 
-    JourneyDTO(Long id, int people) {
+    public JourneyDTO(Long id, int people) {
         this.id = id;
         this.people = people;
     }
@@ -29,5 +31,37 @@ public class JourneyDTO {
 
     public void setPeople(int people) {
         this.people = people;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        result.append("id: " + this.id + " ");
+        result.append("people: " + this.people + " ");
+        result.append("]");
+
+        return result.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Journey) {
+            Journey anotherJourney = (Journey) obj;
+            return anotherJourney.getId() == this.id
+                    && anotherJourney.getPeople() == this.people;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int code = 0;
+        code += this.id;
+        code += this.people;
+        return code;
     }
 }

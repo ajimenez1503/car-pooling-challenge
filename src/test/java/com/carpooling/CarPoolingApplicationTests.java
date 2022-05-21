@@ -2,6 +2,7 @@ package com.carpooling;
 
 import com.carpooling.controller.CarPoolingController;
 import com.carpooling.dto.CarDTO;
+import com.carpooling.dto.JourneyDTO;
 import com.carpooling.model.Car;
 import com.carpooling.model.Journey;
 import org.junit.jupiter.api.*;
@@ -24,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CarPoolingApplicationTests {
 
-    static private List<Car> cars;
-    static private List<Journey> journeys;
+    static private List<CarDTO> cars;
+    static private List<JourneyDTO> journeys;
     @LocalServerPort
     private int port;
     @Autowired
@@ -40,12 +41,12 @@ class CarPoolingApplicationTests {
     @BeforeAll
     static void init() {
         cars = new ArrayList<>(4);
-        cars.add(new Car(0L, 2));
-        cars.add(new Car(1L, 5));
+        cars.add(new CarDTO(0L, 2));
+        cars.add(new CarDTO(1L, 5));
 
         journeys = new ArrayList<>(2);
-        journeys.add(new Journey(0L, 4));
-        journeys.add(new Journey(1L, 3));
+        journeys.add(new JourneyDTO(0L, 4));
+        journeys.add(new JourneyDTO(1L, 3));
     }
 
     @Test
@@ -77,6 +78,7 @@ class CarPoolingApplicationTests {
     @Test
     @Order(1)
     void putCarApi() throws Exception {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(cars, headers);
