@@ -1,6 +1,7 @@
 package com.carpooling;
 
 import com.carpooling.controller.CarPoolingController;
+import com.carpooling.dto.CarDTO;
 import com.carpooling.model.Car;
 import com.carpooling.model.Journey;
 import org.junit.jupiter.api.*;
@@ -202,11 +203,11 @@ class CarPoolingApplicationTests {
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
 
-        ResponseEntity<Car> response = restTemplate.exchange(
+        ResponseEntity<CarDTO> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
                 HttpMethod.POST,
                 entity,
-                Car.class);
+                CarDTO.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(cars.get(1).getId(), response.getBody().getId());
     }
@@ -226,11 +227,11 @@ class CarPoolingApplicationTests {
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
 
-        ResponseEntity<Car> response = restTemplate.exchange(
+        ResponseEntity<CarDTO> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
                 HttpMethod.POST,
                 entity,
-                Car.class);
+                CarDTO.class);
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         assertNull(response.getBody());
     }
@@ -249,11 +250,11 @@ class CarPoolingApplicationTests {
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
 
-        ResponseEntity<Car> response = restTemplate.exchange(
+        ResponseEntity<CarDTO> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
                 HttpMethod.POST,
                 entity,
-                Car.class);
+                CarDTO.class);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
     }
@@ -273,11 +274,11 @@ class CarPoolingApplicationTests {
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
 
-        ResponseEntity<Car> response = restTemplate.exchange(
+        ResponseEntity<CarDTO> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
                 HttpMethod.POST,
                 entity,
-                Car.class);
+                CarDTO.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNull(response.getBody());
     }
@@ -299,11 +300,11 @@ class CarPoolingApplicationTests {
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
 
-        ResponseEntity<Car> response = restTemplate.exchange(
+        ResponseEntity<CarDTO> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
                 HttpMethod.POST,
                 entity,
-                Car.class);
+                CarDTO.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNull(response.getBody());
     }
@@ -420,11 +421,11 @@ class CarPoolingApplicationTests {
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
 
-        ResponseEntity<Car> response = restTemplate.exchange(
+        ResponseEntity<CarDTO> response = restTemplate.exchange(
                 "http://localhost:" + port + "/locate",
                 HttpMethod.POST,
                 entity,
-                Car.class);
+                CarDTO.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(cars.get(1).getId(), response.getBody().getId());
     }

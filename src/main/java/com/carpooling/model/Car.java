@@ -1,5 +1,7 @@
 package com.carpooling.model;
 
+import com.carpooling.dto.CarDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,10 +9,8 @@ import javax.persistence.Id;
 public class Car {
     @Id
     private Long id;
-
     private int seats;
     private int availableSeats;
-
     public Car() {
         this.id = Long.valueOf(0);
         this.seats = 0;
@@ -20,6 +20,11 @@ public class Car {
     public Car(Long id, int seat) {
         setId(id);
         setSeats(seat);
+    }
+
+    public Car(CarDTO car) {
+        setId(car.getId());
+        setSeats(car.getSeats());
     }
 
     public Long getId() {

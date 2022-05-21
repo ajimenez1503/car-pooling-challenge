@@ -1,16 +1,18 @@
 package com.carpooling.controller;
 
+import com.carpooling.dto.CarDTO;
 import com.carpooling.model.Car;
 import com.carpooling.model.Journey;
 import com.carpooling.service.CarPoolingService;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,17 +68,19 @@ public class CarPoolingController {
     }
 
     @PostMapping(value = "/locate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<@Nullable Car> locate(@RequestBody MultiValueMap<String, String> journeyId) {
+    public ResponseEntity<CarDTO> locate(@RequestBody MultiValueMap<String, String> journeyId) {
         if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
         if (journey != null) {
-            return new ResponseEntity<>(
-                    journey.getCar(),
-                    journey.getCar() != null
-                            ? HttpStatus.OK
-                            : HttpStatus.NO_CONTENT);
+            if (journey.getCar() != null) {
+                ModelMapper modelMapper = new ModelMapper();
+                CarDTO car = modelMapper.map(journey.getCar(), CarDTO.class);
+                return new ResponseEntity<>(car, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
