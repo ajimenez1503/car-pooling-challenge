@@ -7,7 +7,6 @@ import com.carpooling.model.Journey;
 import com.carpooling.service.CarPoolingService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import java.lang.reflect.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +33,8 @@ public class CarPoolingController {
 
     @GetMapping("/cars")
     public ResponseEntity<List<CarDTO>> getCars() {
-        List<CarDTO> carsDTOResult = modelMapper.map(service.getCars(), new TypeToken<List<CarDTO>>() {}.getType());
+        List<CarDTO> carsDTOResult = modelMapper.map(service.getCars(), new TypeToken<List<CarDTO>>() {
+        }.getType());
         return new ResponseEntity<>(carsDTOResult, HttpStatus.OK);
     }
 
@@ -46,10 +45,12 @@ public class CarPoolingController {
 
     @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CarDTO>> loadCars(@RequestBody List<CarDTO> carsRequest) {
-        List<Car> cars = modelMapper.map(carsRequest, new TypeToken<List<Car>>() {}.getType());
+        List<Car> cars = modelMapper.map(carsRequest, new TypeToken<List<Car>>() {
+        }.getType());
         // Remove all previous data
         service.cleanDB();
-        List<CarDTO> carsDTOResult = modelMapper.map(service.saveCars(cars), new TypeToken<List<CarDTO>>() {}.getType());
+        List<CarDTO> carsDTOResult = modelMapper.map(service.saveCars(cars), new TypeToken<List<CarDTO>>() {
+        }.getType());
         return new ResponseEntity<>(carsDTOResult, HttpStatus.OK);
     }
 
