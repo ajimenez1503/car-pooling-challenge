@@ -4,7 +4,7 @@ public class CarDTO {
     private Long id;
     private int seats;
 
-    public  CarDTO() {
+    public CarDTO() {
         this.id = Long.valueOf(0);
         this.seats = 0;
     }
@@ -18,12 +18,12 @@ public class CarDTO {
         return this.id;
     }
 
-    public int getSeats() {
-        return this.seats;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getSeats() {
+        return this.seats;
     }
 
     public void setSeats(int seats) {

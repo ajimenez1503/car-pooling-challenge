@@ -1,5 +1,6 @@
 package com.carpooling.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -9,7 +10,7 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
-public class AsyncConfig {
+public class AppConfig {
 
     @Bean
     public Executor taskExecutor() {
@@ -17,5 +18,10 @@ public class AsyncConfig {
         executor.setThreadNamePrefix("CarPolling");
         executor.initialize();
         return executor;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

@@ -57,7 +57,7 @@ public class Journey {
         result.append("id: " + this.id + " ");
         result.append("people: " + this.people + " ");
         if (this.car != null) {
-            result.append("car: " + this.car.toString() + " ");
+            result.append("car: " + this.car + " ");
         }
         result.append("]");
 

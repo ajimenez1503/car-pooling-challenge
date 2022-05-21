@@ -11,6 +11,7 @@ public class Car {
     private Long id;
     private int seats;
     private int availableSeats;
+
     public Car() {
         this.id = Long.valueOf(0);
         this.seats = 0;

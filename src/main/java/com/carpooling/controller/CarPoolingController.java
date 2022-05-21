@@ -1,18 +1,18 @@
 package com.carpooling.controller;
 
 import com.carpooling.dto.CarDTO;
+import com.carpooling.dto.JourneyDTO;
 import com.carpooling.model.Car;
 import com.carpooling.model.Journey;
 import com.carpooling.service.CarPoolingService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.modelmapper.ModelMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +21,9 @@ public class CarPoolingController {
 
     @Autowired
     private CarPoolingService service;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/status")
     public ResponseEntity<String> status() {
@@ -45,9 +48,10 @@ public class CarPoolingController {
     }
 
     @PostMapping(value = "/journey", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> requestJourney(@RequestBody Journey newJourney) {
-        service.addJourney(newJourney);
-        service.findCarForJourney(newJourney, true /* newJourney */);
+    public ResponseEntity<String> requestJourney(@RequestBody JourneyDTO journeyRequest) {
+        Journey journey = modelMapper.map(journeyRequest, Journey.class);
+        service.addJourney(journey);
+        service.findCarForJourney(journey, true /* newJourney */);
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);
     }
 
@@ -75,9 +79,7 @@ public class CarPoolingController {
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
         if (journey != null) {
             if (journey.getCar() != null) {
-                ModelMapper modelMapper = new ModelMapper();
-                CarDTO car = modelMapper.map(journey.getCar(), CarDTO.class);
-                return new ResponseEntity<>(car, HttpStatus.OK);
+                return new ResponseEntity<>(modelMapper.map(journey.getCar(), CarDTO.class), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
