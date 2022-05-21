@@ -108,9 +108,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           #Set artifact name
-          name: artifact
+          name: jar-artifact
           #From this path
-          path: target/car-polling-0.0.1-SNAPSHOT.jar
+          path: ${{ github.workspace }}target/car-polling-0.0.1-SNAPSHOT.jar
   # Build and push Docker image
   docker:
     #Depends on sonar's job
@@ -119,6 +119,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - uses: actions/download-artifact@v1
+        with:
+          name: jar-artifact
+          path: target/
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub

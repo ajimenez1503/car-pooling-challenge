@@ -28,7 +28,7 @@ public class CarPoolingController {
 
     @GetMapping("/status")
     public ResponseEntity<String> status() {
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/cars")
@@ -59,39 +59,40 @@ public class CarPoolingController {
         Journey journey = modelMapper.map(journeyRequest, Journey.class);
         service.addJourney(journey);
         service.findCarForJourney(journey, true /* newJourney */);
-        return new ResponseEntity<>("", HttpStatus.ACCEPTED);
+        return ResponseEntity.accepted().build();
     }
 
 
     @PostMapping(value = "/dropoff", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> requestDropOff(@RequestBody MultiValueMap<String, String> journeyId) {
         if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
         if (journey != null) {
             service.deleteJourney(journey);
             service.reviewWaitingJourneys();
-            return new ResponseEntity<>("", HttpStatus.OK);
+            return ResponseEntity.ok().build();
+
         } else {
-            return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping(value = "/locate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<CarDTO> locate(@RequestBody MultiValueMap<String, String> journeyId) {
         if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
         if (journey != null) {
             if (journey.getCar() != null) {
                 return new ResponseEntity<>(modelMapper.map(journey.getCar(), CarDTO.class), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+                return ResponseEntity.noContent().build();
             }
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 }
