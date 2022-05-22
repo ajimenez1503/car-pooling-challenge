@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class CarPoolingApplicationTests {
+class TestController {
 
     static private List<CarDTO> cars;
     static private List<JourneyDTO> journeys;
