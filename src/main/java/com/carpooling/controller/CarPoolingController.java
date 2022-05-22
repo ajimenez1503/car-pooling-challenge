@@ -1,9 +1,9 @@
 package com.carpooling.controller;
 
-import com.carpooling.model.CarDTO;
-import com.carpooling.model.JourneyDTO;
 import com.carpooling.model.Car;
+import com.carpooling.model.CarDTO;
 import com.carpooling.model.Journey;
+import com.carpooling.model.JourneyDTO;
 import com.carpooling.service.CarPoolingService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;

@@ -1,7 +1,5 @@
 package com.carpooling.model;
 
-import com.carpooling.model.Journey;
-
 public class JourneyDTO {
     private Long id;
     private int people;

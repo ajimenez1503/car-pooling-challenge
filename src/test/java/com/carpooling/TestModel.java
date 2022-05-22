@@ -1,9 +1,9 @@
 package com.carpooling;
 
-import com.carpooling.model.CarDTO;
-import com.carpooling.model.JourneyDTO;
 import com.carpooling.model.Car;
+import com.carpooling.model.CarDTO;
 import com.carpooling.model.Journey;
+import com.carpooling.model.JourneyDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestModel {
 
-    private  ModelMapper mapper;
+    private ModelMapper mapper;
 
     @BeforeEach
     public void setup() {

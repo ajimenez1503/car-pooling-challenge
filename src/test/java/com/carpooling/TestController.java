@@ -1,9 +1,9 @@
 package com.carpooling;
 
 import com.carpooling.controller.CarPoolingController;
+import com.carpooling.model.Car;
 import com.carpooling.model.CarDTO;
 import com.carpooling.model.JourneyDTO;
-import com.carpooling.model.Car;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
