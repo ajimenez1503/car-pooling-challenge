@@ -1,4 +1,4 @@
-package com.carpooling.dto;
+package com.carpooling.model;
 
 import com.carpooling.model.Journey;
 
@@ -49,8 +49,8 @@ public class JourneyDTO {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof Journey) {
-            Journey anotherJourney = (Journey) obj;
+        if (obj instanceof JourneyDTO) {
+            JourneyDTO anotherJourney = (JourneyDTO) obj;
             return anotherJourney.getId() == this.id
                     && anotherJourney.getPeople() == this.people;
         }

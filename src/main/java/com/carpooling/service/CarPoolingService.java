@@ -24,7 +24,7 @@ public class CarPoolingService {
         return carRepository.findAll();
     }
 
-    public List<Journey> getJourney() {
+    public List<Journey> getJourneys() {
         return journeyRepository.findAll();
     }
 

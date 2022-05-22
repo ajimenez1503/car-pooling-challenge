@@ -1,7 +1,7 @@
 package com.carpooling.controller;
 
-import com.carpooling.dto.CarDTO;
-import com.carpooling.dto.JourneyDTO;
+import com.carpooling.model.CarDTO;
+import com.carpooling.model.JourneyDTO;
 import com.carpooling.model.Car;
 import com.carpooling.model.Journey;
 import com.carpooling.service.CarPoolingService;
@@ -39,8 +39,10 @@ public class CarPoolingController {
     }
 
     @GetMapping("/journeys")
-    public ResponseEntity<List<Journey>> getJourney() {
-        return new ResponseEntity<>(service.getJourney(), HttpStatus.OK);
+    public ResponseEntity<List<JourneyDTO>> getJourney() {
+        List<JourneyDTO> journeysDTOResult = modelMapper.map(service.getJourneys(), new TypeToken<List<JourneyDTO>>() {
+        }.getType());
+        return new ResponseEntity<>(journeysDTOResult, HttpStatus.OK);
     }
 
     @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)

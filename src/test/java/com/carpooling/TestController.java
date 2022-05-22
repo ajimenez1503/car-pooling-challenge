@@ -1,8 +1,8 @@
 package com.carpooling;
 
 import com.carpooling.controller.CarPoolingController;
-import com.carpooling.dto.CarDTO;
-import com.carpooling.dto.JourneyDTO;
+import com.carpooling.model.CarDTO;
+import com.carpooling.model.JourneyDTO;
 import com.carpooling.model.Car;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,11 +82,11 @@ class TestController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(cars, headers);
 
-        ResponseEntity<List<Car>> response = restTemplate.exchange(
+        ResponseEntity<List<CarDTO>> response = restTemplate.exchange(
                 "http://localhost:" + port + "/cars",
                 HttpMethod.PUT,
                 entity,
-                new ParameterizedTypeReference<List<Car>>() {
+                new ParameterizedTypeReference<List<CarDTO>>() {
                 });
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -125,11 +125,11 @@ class TestController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> entity = new HttpEntity<Object>(headers);
 
-        ResponseEntity<List<Car>> response = restTemplate.exchange(
+        ResponseEntity<List<CarDTO>> response = restTemplate.exchange(
                 "http://localhost:" + port + "/cars",
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<List<Car>>() {
+                new ParameterizedTypeReference<List<CarDTO>>() {
                 });
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -169,6 +169,28 @@ class TestController {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Check that the /journey GET API return HttpStatus.Ok.
+     *
+     * @throws Exception
+     */
+    @Test
+    @Order(4)
+    void getJourneysApiStatusOK() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> entity = new HttpEntity<Object>(headers);
+
+        ResponseEntity<List<JourneyDTO>> response = restTemplate.exchange(
+                "http://localhost:" + port + "/journeys",
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<JourneyDTO>>() {
+                });
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(journeys, response.getBody());
+    }
+
 
     /**
      * Check that the /journey POST API return HttpStatus.BAD_REQUEST if passing invalid request body.
@@ -195,7 +217,7 @@ class TestController {
      * @throws Exception
      */
     @Test
-    @Order(4)
+    @Order(5)
     void postLocateApiStatusOK() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
@@ -219,7 +241,7 @@ class TestController {
      * @throws Exception
      */
     @Test
-    @Order(5)
+    @Order(6)
     void postLocateApiStatusNoContent() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
@@ -316,7 +338,7 @@ class TestController {
      * @throws Exception
      */
     @Test
-    @Order(6)
+    @Order(7)
     void postDropOffApiStatusOK() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
@@ -413,7 +435,7 @@ class TestController {
      * @throws Exception
      */
     @Test
-    @Order(7)
+    @Order(8)
     void postLocateApiStatusOKAfterWaiting() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();

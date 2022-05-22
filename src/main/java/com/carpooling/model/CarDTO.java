@@ -1,4 +1,4 @@
-package com.carpooling.dto;
+package com.carpooling.model;
 
 import com.carpooling.model.Car;
 
@@ -37,8 +37,8 @@ public class CarDTO {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof Car) {
-            Car anotherCar = (Car) obj;
+        if (obj instanceof CarDTO) {
+            CarDTO anotherCar = (CarDTO) obj;
             return anotherCar.getId() == this.id
                     && anotherCar.getSeats() == this.seats;
         }
