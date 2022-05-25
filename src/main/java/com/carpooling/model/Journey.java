@@ -53,13 +53,13 @@ public class Journey {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("[");
-        result.append("id: " + this.id + " ");
-        result.append("people: " + this.people + " ");
+        result.append("{");
+        result.append("\"id\":" + this.id);
+        result.append(",\"people\":" + this.people);
         if (this.car != null) {
-            result.append("car: " + this.car + " ");
+            result.append(",\"car\":" + this.car);
         }
-        result.append("]");
+        result.append("}");
 
         return result.toString();
     }

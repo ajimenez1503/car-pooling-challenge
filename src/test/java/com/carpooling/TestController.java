@@ -221,7 +221,7 @@ class TestController {
     void postLocateApiStatusOK() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
-        journeyId.add("ID", "0");
+        journeyId.add("ID", Long.toString(journeys.get(0).getId()));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
@@ -245,7 +245,7 @@ class TestController {
     void postLocateApiStatusNoContent() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
-        journeyId.add("ID", "1");
+        journeyId.add("ID", Long.toString(journeys.get(1).getId()));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
@@ -342,7 +342,7 @@ class TestController {
     void postDropOffApiStatusOK() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
-        journeyId.add("ID", "0");
+        journeyId.add("ID", Long.toString(journeys.get(0).getId()));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);
@@ -439,7 +439,7 @@ class TestController {
     void postLocateApiStatusOKAfterWaiting() throws Exception {
         HttpHeaders headers = new HttpHeaders();
         LinkedMultiValueMap<String, String> journeyId = new LinkedMultiValueMap<>();
-        journeyId.add("ID", "1");
+        journeyId.add("ID", Long.toString(journeys.get(1).getId()));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         HttpEntity<Object> entity = new HttpEntity<Object>(journeyId, headers);

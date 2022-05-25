@@ -34,10 +34,10 @@ public class JourneyDTO {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("[");
-        result.append("id: " + this.id + " ");
-        result.append("people: " + this.people + " ");
-        result.append("]");
+        result.append("{");
+        result.append("\"id\":" + this.id);
+        result.append(",\"people\":" + this.people);
+        result.append("}");
 
         return result.toString();
     }

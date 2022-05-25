@@ -31,21 +31,21 @@ public class CarPoolingController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/cars")
+    @GetMapping(value = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CarDTO>> getCars() {
         List<CarDTO> carsDTOResult = modelMapper.map(service.getCars(), new TypeToken<List<CarDTO>>() {
         }.getType());
         return new ResponseEntity<>(carsDTOResult, HttpStatus.OK);
     }
 
-    @GetMapping("/journeys")
+    @GetMapping(value = "/journeys", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<JourneyDTO>> getJourney() {
         List<JourneyDTO> journeysDTOResult = modelMapper.map(service.getJourneys(), new TypeToken<List<JourneyDTO>>() {
         }.getType());
         return new ResponseEntity<>(journeysDTOResult, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CarDTO>> loadCars(@RequestBody List<CarDTO> carsRequest) {
         List<Car> cars = modelMapper.map(carsRequest, new TypeToken<List<Car>>() {
         }.getType());
@@ -81,7 +81,7 @@ public class CarPoolingController {
         }
     }
 
-    @PostMapping(value = "/locate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/locate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CarDTO> locate(@RequestBody MultiValueMap<String, String> journeyId) {
         if (!journeyId.containsKey("ID") || journeyId.get("ID").size() > 1) {
             return ResponseEntity.badRequest().build();

@@ -46,10 +46,10 @@ public class CarDTO {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("[");
-        result.append("id: " + this.id + " ");
-        result.append("seats: " + this.seats + " ");
-        result.append("]");
+        result.append("{");
+        result.append("\"id\":" + this.id);
+        result.append(",\"seats\":" + this.seats);
+        result.append("}");
 
         return result.toString();
     }
