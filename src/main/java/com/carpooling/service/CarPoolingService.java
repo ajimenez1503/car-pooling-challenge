@@ -13,7 +13,7 @@ import java.util.*;
 public class CarPoolingService {
 
     // The access to the list has to be thread safe.
-    private final List<Journey> waitingJourneys = Collections.synchronizedList(new ArrayList());
+    private final List<Journey> waitingJourneys = Collections.synchronizedList(new ArrayList<Journey>());
     @Autowired
     private CarRepository carRepository;
     @Autowired
