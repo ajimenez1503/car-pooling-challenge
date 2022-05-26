@@ -60,7 +60,7 @@ public class CarPoolingController {
     public ResponseEntity<String> requestJourney(@RequestBody JourneyDTO journeyRequest) {
         Journey journey = modelMapper.map(journeyRequest, Journey.class);
         service.addJourney(journey);
-        service.registerJourney(journey); // task in the taskScheduler
+        service.registerJourney(journey);
         return ResponseEntity.accepted().build();
     }
 
@@ -73,7 +73,7 @@ public class CarPoolingController {
         Journey journey = service.getJourneyById(Long.parseLong(journeyId.get("ID").get(0)));
         if (journey != null) {
             service.deleteJourney(journey);
-            service.reviewWaitingJourneys(); // task in the taskScheduler
+            service.reviewWaitingJourneys();
             return ResponseEntity.ok().build();
 
         } else {

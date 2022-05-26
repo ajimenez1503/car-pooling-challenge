@@ -78,6 +78,7 @@ public class CarPoolingService {
     }
 
     public void reviewWaitingJourneys() {
+        // Use iterator to remove inside of the loop.
         Iterator<Journey> itr = waitingJourneys.iterator();
         Journey journey;
         while (itr.hasNext()) {
