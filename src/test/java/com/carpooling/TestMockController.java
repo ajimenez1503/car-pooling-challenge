@@ -49,7 +49,7 @@ class TestMockController {
     }
 
     @Test
-    public void integrationTest() throws Exception {
+    void integrationTest() throws Exception {
         // Check status is working
         this.mockMvc.perform(get("/status")).andDo(print())
                 .andExpect(status().isOk());
